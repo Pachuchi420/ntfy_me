@@ -11,8 +11,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { signUp } from "@/app/actions"
-import { useState } from 'react'
-
+import { useActionState, useState } from 'react'
 
 
 
@@ -27,12 +26,22 @@ export function LoginForm({
   const [error, setError] = useState("")
   const [password, setPassword] = useState("")
   const [repeatPassword, setRepeatPassword] = useState("")
-
+  const [state, formAction] = useActionState(signUp, { error: null })
+  
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     const formData = new FormData(e.currentTarget)
 
     const password = formData.get("password")
     const repeatPassword = formData.get("repeatPassword")
+    const email = formData.get("email") as string
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+    if (!emailRegex.test(email)) {
+      e.preventDefault()
+      setError("Please enter a valid email address")
+      return
+    }
+
 
     if (password !== repeatPassword) {
       e.preventDefault()
@@ -54,7 +63,7 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit= {handleSubmit} action={signUp}>
+          <form autoComplete="off" onSubmit= {handleSubmit} action={formAction}>
             <div className="grid gap-6">
               <div className="flex flex-col gap-4">
                 <Button variant="outline" className="w-full">

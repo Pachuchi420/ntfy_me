@@ -3,20 +3,34 @@
 import { useEffect, useState } from "react"
 import type { Dispatch, SetStateAction } from "react"
 import { Button } from "@/components/ui/button"
-import { LoginForm } from "./login-form-dashboard"
+import { LoginForm } from "./signup-form-dashboard"
 
 type LoginModalProps = {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
 }
 
-export function LoginModal({ open, setOpen }: LoginModalProps) {
+export function SignUpModal({ open, setOpen }: LoginModalProps) {
   const [show, setShow] = useState(false) 
 
   // When parent opens the modal, mount it and fade/slide in.
   useEffect(() => {
     if (open) setShow(true)
   }, [open])
+
+  useEffect(() => {
+  function handleKeyDown(event: KeyboardEvent) {
+    if (event.key === "Escape") {
+      close()
+    }
+  }
+
+  window.addEventListener("keydown", handleKeyDown)
+
+  return () => {
+    window.removeEventListener("keydown", handleKeyDown)
+  }
+}, [])
 
   function close() {
     // start fade/slide out

@@ -1,6 +1,7 @@
 import AccountForm from './account-form'
 import { createClient } from '@/lib/supabase/server'
 
+
 export default async function Account() {
   const supabase = await createClient()
 
@@ -10,3 +11,4 @@ export default async function Account() {
 
   return <AccountForm user={user} />
 }
+

@@ -1,6 +1,6 @@
 "use client"
 import {useState} from "react"
-import { LoginModal } from "@/components/login-modal";
+import { SignUpModal } from "@/components/signup-modal";
 import AgencyHeroSection from "@/components/shadcn-space/blocks/hero-01";
 
 export default function page() {
@@ -8,7 +8,7 @@ export default function page() {
     return (
         <main>
             <AgencyHeroSection openLogin={ () => setOpen(true)} />
-            <LoginModal open ={open} setOpen={setOpen}/>
+            <SignUpModal open ={open} setOpen={setOpen}/>
         </main>
     )
 }
